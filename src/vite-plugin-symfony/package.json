@@ -1,5 +1,5 @@
 {
-  "name": "vite-plugin-symfony",
+  "name": "@arakmar/vite-plugin-symfony",
   "version": "6.4.7",
   "description": "A Vite plugin to integrate easily Vite in your Symfony application",
   "main": "dist/index.js",
