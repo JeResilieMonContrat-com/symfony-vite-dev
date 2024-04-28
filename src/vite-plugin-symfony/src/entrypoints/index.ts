@@ -32,6 +32,7 @@ import { resolveOutDir, refreshPaths } from "./pluginOptions";
 import { GeneratedFiles, ResolvedConfigWithOrderablePlugins, VitePluginSymfonyEntrypointsOptions } from "../types";
 import { addIOMapping } from "./pathMapping";
 import { showDepreciationsWarnings } from "./depreciations";
+import { AddressInfo } from "net";
 
 // src and dist directory are in the same level;
 let pluginDir = dirname(dirname(fileURLToPath(import.meta.url)));
@@ -140,14 +141,12 @@ export default function symfonyEntrypoints(pluginOptions: VitePluginSymfonyEntry
         console.log(`  ${colors.green("➜")}  Vite ${colors.yellow("⚡️")} Symfony: ${versionStr}`);
       };
 
-      devServer.httpServer?.once("listening", () => {
-        // empty the buildDir and create an entrypoints.json file inside.
+      const generateDevJson = function (address: string | AddressInfo) {
         if (viteConfig.env.DEV && !process.env.VITEST) {
           showDepreciationsWarnings(pluginOptions, logger);
 
           const buildDir = resolve(viteConfig.root, viteConfig.build.outDir);
           const viteDir = resolve(buildDir, ".vite");
-          const address = devServer.httpServer?.address();
           const entryPointsPath = resolve(viteConfig.root, viteConfig.build.outDir, entryPointsFileName);
 
           if (!isAddressInfo(address)) {
@@ -177,7 +176,15 @@ export default function symfonyEntrypoints(pluginOptions: VitePluginSymfonyEntry
             viteServer: viteDevServerUrl,
           });
         }
-      });
+      };
+
+      if (devServer.httpServer === null && devServer.middlewares) {
+        generateDevJson(pluginOptions.middleWareAddress);
+      } else {
+        devServer.httpServer?.once("listening", () => {
+          generateDevJson(devServer.httpServer?.address());
+        });
+      }
 
       // full reload vite dev server if twig files are modified.
       if (pluginOptions.refresh !== false) {

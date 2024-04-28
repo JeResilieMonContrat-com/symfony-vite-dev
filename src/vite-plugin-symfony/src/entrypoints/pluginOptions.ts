@@ -25,6 +25,11 @@ export function resolvePluginEntrypointsOptions(
     refresh: userConfig.refresh ?? false,
     servePublic: userConfig.servePublic,
     sriAlgorithm: userConfig.sriAlgorithm ?? false,
+    middleWareAddress: userConfig.middleWareAddress ?? {
+      address: "localhost",
+      family: "http",
+      port: 5173,
+    },
     viteDevServerHostname: userConfig.viteDevServerHostname ?? null,
   };
 }

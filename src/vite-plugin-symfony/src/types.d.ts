@@ -1,5 +1,6 @@
 import "rollup";
 import { Plugin, ResolvedConfig } from "vite";
+import { AddressInfo } from "net";
 
 declare module "rollup" {
   export interface RenderedChunk {
@@ -175,6 +176,11 @@ export type VitePluginSymfonyEntrypointsOptions = {
    * @default false
    */
   sriAlgorithm: HashAlgorithm;
+
+  /**
+   * The address to use if the vite dev server run as a middleware
+   */
+  middleWareAddress: AddressInfo;
 
   /**
    * Show vite resolved config
