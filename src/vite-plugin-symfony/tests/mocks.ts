@@ -1,4 +1,4 @@
-import type { OutputChunk, OutputAsset } from "rollup";
+import type { OutputChunk, OutputAsset } from "rolldown";
 import type { ResolvedConfig, UserConfig } from "vite";
 import { ChunkMetadata } from "../src/types";
 
@@ -114,6 +114,21 @@ export const legacyPolyfills = {
   type: "chunk",
   facadeModuleId: "\0vite/legacy-polyfills",
   fileName: "assets/polyfills-legacy-40963d34.js",
+  name: "polyfills",
+  isEntry: true,
+  imports: [],
+  viteMetadata: {
+    importedCss: new Set(),
+    importedAssets: new Set(),
+  },
+  code: 'console.log("welcome.js !");\n',
+} as unknown as OutputChunk & { viteMetadata: ChunkMetadata };
+
+export const modernPolyfills = {
+  dynamicImports: [],
+  type: "chunk",
+  facadeModuleId: "\0vite/legacy-polyfills",
+  fileName: "assets/polyfills-Cj9hW7C2.js",
   name: "polyfills",
   isEntry: true,
   imports: [],

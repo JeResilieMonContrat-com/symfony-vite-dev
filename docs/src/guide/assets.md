@@ -58,6 +58,7 @@ import.meta.glob([
 ## Multiple asset strategies
 
 if you want to use the [Twig asset function](https://symfony.com/doc/current/reference/twig_reference.html#asset) to serve assets from Vite but you want to serve other assets that come from another source you can define multiple strategies.
+This is essential when you bundle assets copied into the `public/bundles` folder.
 
 ```yaml
 # config/packages/framework.yaml
@@ -74,4 +75,14 @@ framework:
 
 {# default strategy #}
 {{ asset('other-location/logo.svg')}}
+```
+
+## Copying static assets
+
+If copying static assets with [rollup-plugin-copy](https://www.npmjs.com/package/rollup-plugin-copy) or [vite-plugin-static-copy](https://www.npmjs.com/package/vite-plugin-static-copy) or other plugins, and they are not referenced in the manifest, set `pentatrion_vite.throw_on_missing_asset` to `false`
+```yaml
+# config/packages/pentatrion_vite.yaml
+
+pentatrion_vite:
+    throw_on_missing_asset: false
 ```

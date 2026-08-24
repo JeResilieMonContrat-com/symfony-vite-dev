@@ -4,7 +4,7 @@ import path from "node:path";
 import type { AddressInfo } from "net";
 import { writeFileSync, rmSync, readdirSync } from "fs";
 import { join } from "path";
-import type { RenderedChunk, OutputChunk, OutputAsset, NormalizedOutputOptions, ExternalOption } from "rollup";
+import type { RenderedChunk, OutputChunk, OutputAsset, NormalizedOutputOptions, ExternalOption } from "rolldown";
 import { resolve, extname, relative } from "path";
 import { DevServerUrl, FileInfos, ParsedInputs, HashAlgorithm, VitePluginSymfonyEntrypointsOptions } from "../types";
 import { BinaryLike, createHash } from "node:crypto";
@@ -95,7 +95,7 @@ const cssModuleRE = new RegExp(`\\.module${CSS_LANGS_RE.source}`);
 const commonjsProxyRE = /\?commonjs-proxy/;
 const isCSSRequest = (request: string) => CSS_LANGS_RE.test(request);
 
-const polyfillId = "\0vite/legacy-polyfills";
+export const polyfillId = "\0vite/legacy-polyfills";
 
 export function resolveDevServerUrl(
   address: AddressInfo,
@@ -204,7 +204,8 @@ function generateHash(source: BinaryLike, alg: HashAlgorithm) {
 export const prepareRollupInputs = (config: ResolvedConfig): ParsedInputs => {
   const inputParsed: ParsedInputs = {};
 
-  for (const [entryName, inputRelPath] of Object.entries(config.build.rollupOptions.input ?? {})) {
+  const input = config.build.rollupOptions.input ?? config.build.rolldownOptions?.input ?? {};
+  for (const [entryName, inputRelPath] of Object.entries(input)) {
     const entryAbsolutePath = normalizePath(resolve(config.root, inputRelPath));
 
     const extension = extname(inputRelPath);
@@ -242,13 +243,21 @@ export const getInputRelPath = (
   }
 
   if ([polyfillId].indexOf(chunk.facadeModuleId) !== -1) {
-    return chunk.facadeModuleId.replace(/\0/g, "");
+    // modern polyfill chunk and legacy polyfill chunk uses same polyfillId
+    const baseInputRelPath = chunk.facadeModuleId.replace(/\0/g, "");
+    if (chunk.fileName.includes("-legacy")) {
+      // legacy polyfill
+      return `${baseInputRelPath}-legacy`;
+    } else {
+      // modern polyfill
+      return baseInputRelPath;
+    }
   }
 
   let inputRelPath = normalizePath(path.relative(config.root, chunk.facadeModuleId));
 
-  /* when we generate legacy files, format === 'system'. after format is other value like 'es' */
-  if (options.format === "system" && !chunk.name.includes("-legacy")) {
+  /* when we generate legacy files, the chunk fileName contains '-legacy' */
+  if (chunk.fileName.includes("-legacy") && !chunk.name.includes("-legacy")) {
     inputRelPath = getLegacyName(inputRelPath);
   }
   return inputRelPath.replace(/\0/g, "");

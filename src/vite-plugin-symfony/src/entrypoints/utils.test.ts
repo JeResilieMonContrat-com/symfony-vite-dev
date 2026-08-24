@@ -14,7 +14,7 @@ import {
   trimSlashes,
 } from "./utils";
 import { resolvePluginEntrypointsOptions } from "./pluginOptions";
-import { OutputChunk, OutputAsset, NormalizedOutputOptions } from "rollup";
+import { OutputChunk, OutputAsset, NormalizedOutputOptions } from "rolldown";
 import {
   asyncDepChunk,
   indexCss,
@@ -27,7 +27,7 @@ import {
 } from "~tests/mocks";
 import { resolveConfig, type ResolvedConfig } from "vite";
 import { VitePluginSymfonyOptions } from "~/types";
-import type { RenderedChunk } from "rollup";
+import type { RenderedChunk } from "rolldown";
 
 const viteBaseConfig = {
   root: "/home/me/project-dir",
@@ -400,6 +400,7 @@ describe("getInputRelPath", () => {
         {
           type: "chunk",
           facadeModuleId: "/home/me/project-dir/assets/page/welcome/index.js",
+          fileName: "assets/welcome-1e67239d.js",
           name: "welcome",
         } as OutputChunk,
         { format: "es" } as NormalizedOutputOptions,
@@ -412,12 +413,41 @@ describe("getInputRelPath", () => {
         {
           type: "chunk",
           facadeModuleId: "/home/me/project-dir/assets/page/welcome/index.js",
+          fileName: "assets/welcome-legacy-64979d13.js",
           name: "welcome",
         } as OutputChunk,
-        { format: "system" } as NormalizedOutputOptions,
+        { format: "es" } as NormalizedOutputOptions,
         viteBaseConfig,
       ),
     ).toBe("assets/page/welcome/index-legacy.js");
+  });
+
+  it("generate correct polyfills path", () => {
+    expect(
+      getInputRelPath(
+        {
+          type: "chunk",
+          facadeModuleId: "\0vite/legacy-polyfills",
+          name: "polyfills",
+          fileName: "polyfills-legacy.js",
+        } as OutputChunk,
+        { format: "es" } as NormalizedOutputOptions,
+        viteBaseConfig,
+      ),
+    ).toBe("vite/legacy-polyfills-legacy");
+
+    expect(
+      getInputRelPath(
+        {
+          type: "chunk",
+          facadeModuleId: "\0vite/legacy-polyfills",
+          name: "polyfills",
+          fileName: "polyfills.js",
+        } as OutputChunk,
+        { format: "es" } as NormalizedOutputOptions,
+        viteBaseConfig,
+      ),
+    ).toBe("vite/legacy-polyfills");
   });
 });
 
