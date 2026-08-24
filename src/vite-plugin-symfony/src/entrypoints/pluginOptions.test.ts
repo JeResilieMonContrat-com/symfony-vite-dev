@@ -11,6 +11,11 @@ describe("resolvePluginEntrypointsOptions", () => {
         "exposedEnvVars": [
           "APP_ENV",
         ],
+        "middleWareAddress": {
+          "address": "localhost",
+          "family": "http",
+          "port": 5173,
+        },
         "originOverride": null,
         "refresh": false,
         "servePublic": "public",

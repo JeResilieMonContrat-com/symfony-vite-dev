@@ -142,7 +142,7 @@ export default function symfonyEntrypoints(pluginOptions: VitePluginSymfonyEntry
         console.log(`  ${colors.green("➜")}  Vite ${colors.yellow("⚡️")} Symfony: ${versionStr}`);
       };
 
-      const generateDevJson = function (address: string | AddressInfo) {
+      const generateDevJson = function (address: string | AddressInfo | null) {
         // empty the buildDir and create an entrypoints.json file inside.
         if (viteConfig.env.DEV && !process.env.VITEST) {
           showDepreciationsWarnings(pluginOptions, logger);
@@ -180,11 +180,12 @@ export default function symfonyEntrypoints(pluginOptions: VitePluginSymfonyEntry
         }
       };
 
-      if (devServer.httpServer === null && devServer.middlewares) {
+      const httpServer = devServer.httpServer;
+      if (httpServer === null) {
         generateDevJson(pluginOptions.middleWareAddress);
       } else {
-        devServer.httpServer?.once("listening", () => {
-          generateDevJson(devServer.httpServer?.address());
+        httpServer.once("listening", () => {
+          generateDevJson(httpServer.address());
         });
       }
 
