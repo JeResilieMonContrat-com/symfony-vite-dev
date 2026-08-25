@@ -1,45 +1,52 @@
 packages:
-    - 'playground/*'
-    - 'src/*'
-    - 'docs'
+  - 'playground/*'
+  - 'src/*'
+  - 'docs'
+
+allowBuilds:
+  '@parcel/watcher': set this to true or false
+  core-js: set this to true or false
+  esbuild: set this to true or false
+  puppeteer: set this to true or false
+  swup: set this to true or false
+  vue-demi: set this to true or false
 
 catalog:
-    "@eslint/js": "^9.27.0"
-    "@hotwired/stimulus": "^3.2.2"
-    "@hotwired/turbo": "^8.0.12"
-    "@sveltejs/vite-plugin-svelte": "^5.0.3"
-    "@symfony/ux-autocomplete": "^2.24.0"
-    "@symfony/ux-chartjs": "^2.24.0"
-    "@symfony/ux-cropperjs": "^2.24.0"
-    "@symfony/ux-dropzone": "^2.24.0"
-    "@symfony/ux-notify": "^2.24.0"
-    "@symfony/ux-react": "^2.24.0"
-    "@symfony/ux-svelte": "^2.24.0"
-    "@symfony/ux-swup": "^2.24.0"
-    "@symfony/ux-translator": "^2.24.0"
-    "@symfony/ux-turbo": "^2.24.0"
-    "@symfony/ux-typed": "^2.24.0"
-    "@symfony/ux-vue": "^2.24.0"
-    "@symfony/ux-lazy-image": "^2.24.0"
-    "@symfony/ux-live-component": "^2.24.0"
-    "@symfony/ux-toggle-password": "^2.24.0"
-    "@symfony/stimulus-bridge": "^4.0.0"
-    "@types/node": "^22.13.1"
-    "@types/react": "^19.1.4"
-    "@types/react-dom": "^19.1.5"
-    "@vitejs/plugin-legacy": "^8.0.0"
-    "@vitejs/plugin-react": "^6.0.0"
-    "@vitejs/plugin-vue": "^6.0.0"
+  "@eslint/js": "^9.27.0"
+  "@hotwired/stimulus": "^3.2.2"
+  "@hotwired/turbo": "^8.0.12"
+  "@sveltejs/vite-plugin-svelte": "^5.0.3"
+  "@symfony/ux-autocomplete": "^2.24.0"
+  "@symfony/ux-chartjs": "^2.24.0"
+  "@symfony/ux-cropperjs": "^2.24.0"
+  "@symfony/ux-dropzone": "^2.24.0"
+  "@symfony/ux-notify": "^2.24.0"
+  "@symfony/ux-react": "^2.24.0"
+  "@symfony/ux-svelte": "^2.24.0"
+  "@symfony/ux-swup": "^2.24.0"
+  "@symfony/ux-translator": "^2.24.0"
+  "@symfony/ux-turbo": "^2.24.0"
+  "@symfony/ux-typed": "^2.24.0"
+  "@symfony/ux-vue": "^2.24.0"
+  "@symfony/ux-lazy-image": "^2.24.0"
+  "@symfony/ux-live-component": "^2.24.0"
+  "@symfony/ux-toggle-password": "^2.24.0"
+  "@symfony/stimulus-bridge": "^4.0.0"
+  "@types/node": "^22.13.1"
+  "@types/react": "^19.1.4"
+  "@types/react-dom": "^19.1.5"
+  "@vitejs/plugin-legacy": "^8.0.0"
+  "@vitejs/plugin-react": "^6.0.0"
+  "@vitejs/plugin-vue": "^6.0.0"
 
-    "globals": "^16.1.0"
-    "prettier": "^3.4.2"
-    "react": "^19.1.0"
-    "react-dom": "^19.1.0"
-    "svelte": "^5.30.2"
-    "typescript": "^5.8.3"
-    "typescript-eslint": "^8.23.0"
-    "vite": "^8.0.0"
-    "vite-plugin-inspect": "^10.2.0"
-    "vite-plugin-static-copy": "^2.2.0"
-    "vue": "^3.5.14"
-
+  "globals": "^16.1.0"
+  "prettier": "^3.4.2"
+  "react": "^19.1.0"
+  "react-dom": "^19.1.0"
+  "svelte": "^5.30.2"
+  "typescript": "^5.8.3"
+  "typescript-eslint": "^8.23.0"
+  "vite": "^8.0.0"
+  "vite-plugin-inspect": "^10.2.0"
+  "vite-plugin-static-copy": "^2.2.0"
+  "vue": "^3.5.14"
